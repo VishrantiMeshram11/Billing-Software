@@ -1,0 +1,116 @@
+//package com.billing.billing_software.model;
+//
+//public class InvoiceItem {
+//
+//    private String InvoiceItemId;
+//    private Product product;
+//    private int InvoiceItemQuantity;
+//    private int InvoiceItemPrice;
+//    private double taxAmount;
+//    private  double total;
+//
+//    public String getInvoiceItemId() {
+//        return InvoiceItemId;
+//    }
+//
+//    public void setInvoiceItemId(String invoiceItemId) {
+//        InvoiceItemId = invoiceItemId;
+//    }
+//
+//    public Product getProduct() {
+//        return product;
+//    }
+//
+//    public void setProduct(Product product) {
+//        this.product = product;
+//    }
+//
+//    public int getInvoiceItemQuantity() {
+//        return InvoiceItemQuantity;
+//    }
+//
+//    public void setInvoiceItemQuantity(int invoiceItemQuantity) {
+//        InvoiceItemQuantity = invoiceItemQuantity;
+//    }
+//
+//    public int getInvoiceItemPrice() {
+//        return InvoiceItemPrice;
+//    }
+//
+//    public void setInvoiceItemPrice(int invoiceItemPrice) {
+//        InvoiceItemPrice = invoiceItemPrice;
+//    }
+//
+//    public double getTaxAmount() {
+//        return taxAmount;
+//    }
+//
+//    public void setTaxAmount(double taxAmount) {
+//        this.taxAmount = taxAmount;
+//    }
+//
+//    public double getTotal() {
+//        return total;
+//    }
+//
+//    public void setTotal(double total) {
+//        this.total = total;
+//    }
+//
+//    public InvoiceItem(String invoiceItemId, Product product,
+//                       int invoiceItemQuantity, int invoiceItemPrice, double taxAmount, double total) {
+//        InvoiceItemId = invoiceItemId;
+//        this.product = product;
+//        InvoiceItemQuantity = invoiceItemQuantity;
+//        InvoiceItemPrice = invoiceItemPrice;
+//        this.taxAmount = taxAmount;
+//        this.total = total;
+//
+//
+//
+//    }
+//}
+
+
+package com.billing.billing_software.model;
+
+public class InvoiceItem {
+
+    private int id;
+    private Product product;
+    private int quantity;
+    private double price;
+    private double taxAmount;
+    private double total;
+
+    public InvoiceItem() {}
+
+    public InvoiceItem(int id, Product product, int quantity,
+                       double price, double taxAmount, double total) {
+        this.id = id;
+        this.product = product;
+        this.quantity = quantity;
+        this.price = price;
+        this.taxAmount = taxAmount;
+        this.total = total;
+    }
+
+    // Getters & Setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
+    public Product getProduct() { return product; }
+    public void setProduct(Product product) { this.product = product; }
+
+    public int getQuantity() { return quantity; }
+    public void setQuantity(int quantity) { this.quantity = quantity; }
+
+    public double getPrice() { return price; }
+    public void setPrice(double price) { this.price = price; }
+
+    public double getTaxAmount() { return taxAmount; }
+    public void setTaxAmount(double taxAmount) { this.taxAmount = taxAmount; }
+
+    public double getTotal() { return total; }
+    public void setTotal(double total) { this.total = total; }
+}
