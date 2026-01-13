@@ -1,6 +1,6 @@
 package com.billing.billing_software.repository;
 
-import com.billing.billing_software.model.Invoice;
+import com.billing.billing_software.DTOs.InvoiceResponseDTO;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -9,16 +9,27 @@ import java.util.List;
 @Repository
 public class InvoiceRepository {
 
-    private final List<Invoice> invoices = new ArrayList<>();
-    private int counter = 1;
+    private final List<InvoiceResponseDTO> invoices = new ArrayList<>();
 
-    public Invoice save(Invoice invoice) {
-        invoice.setInvoiceId(counter++);
+    public void save(InvoiceResponseDTO invoice){
         invoices.add(invoice);
-        return invoice;
     }
 
-    public List<Invoice> findAll() {
+    public List<InvoiceResponseDTO> findAll(){
         return invoices;
     }
+
+    public List<InvoiceResponseDTO> findByCustomerId(int customerId){
+        return invoices.stream()
+                .filter(invoiceResponseDTO -> invoiceResponseDTO.getCustomerId() ==customerId)
+                .toList();
+    }
+
+    public InvoiceResponseDTO findById(int id){
+        return invoices.stream()
+                .filter(invoiceResponseDTO -> invoiceResponseDTO.getInvoiceId() ==id)
+                .findFirst()
+                .orElseThrow(null);
+    }
+
 }

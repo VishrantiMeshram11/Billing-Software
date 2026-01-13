@@ -1,39 +1,19 @@
-//package com.billing.billing_software.DTOs;
-//
-//import com.billing.billing_software.model.Customer;
-//import com.billing.billing_software.model.InvoiceItem;
-//
-//import java.util.List;
-//
-//public class InvoiceRequestDTO {
-//    private Customer customer;
-//    private List<InvoiceItem> items;
-//    private int discount;
-
 package com.billing.billing_software.DTOs;
 
 import java.util.List;
 
 public class InvoiceRequestDTO {
 
-    private String customerId;
-    private List<ProductQuantityDTO> products;
+    private int customerId;
     private double discount;
+    private List<ItemRequestDTO> items;
 
-    public String getCustomerId() {
+    public int getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(String customerId) {
+    public void setCustomerId(int customerId) {
         this.customerId = customerId;
-    }
-
-    public List<ProductQuantityDTO> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<ProductQuantityDTO> products) {
-        this.products = products;
     }
 
     public double getDiscount() {
@@ -44,8 +24,15 @@ public class InvoiceRequestDTO {
         this.discount = discount;
     }
 
-    // Inner DTO
-    public static class ProductQuantityDTO {
+    public List<ItemRequestDTO> getItems() {
+        return items;
+    }
+
+    public void setItems(List<ItemRequestDTO> items) {
+        this.items = items;
+    }
+
+    public static class ItemRequestDTO{
         private int productId;
         private int quantity;
 
