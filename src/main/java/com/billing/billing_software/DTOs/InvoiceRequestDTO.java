@@ -32,7 +32,7 @@ public class InvoiceRequestDTO {
         this.items = items;
     }
 
-    public static class ItemRequestDTO{
+    public static class ItemRequestDTO {
         private int productId;
         private int quantity;
 

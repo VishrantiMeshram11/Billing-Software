@@ -8,6 +8,8 @@ public class Customer {
     String customerEmail;
     String customerAddress;
 
+    public Customer() {}
+
     public int getCustomerId() {
         return customerId;
     }

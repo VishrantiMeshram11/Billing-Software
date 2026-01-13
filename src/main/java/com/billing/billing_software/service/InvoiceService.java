@@ -1,105 +1,19 @@
 package com.billing.billing_software.service;
 
 import com.billing.billing_software.DTOs.InvoiceRequestDTO;
-import com.billing.billing_software.DTOs.InvoiceResponseDTO;
-import com.billing.billing_software.model.Product;
-import com.billing.billing_software.exception.InsufficientStockException;
-import com.billing.billing_software.repository.InvoiceRepository;
-import org.springframework.stereotype.Service;
+import com.billing.billing_software.model.Invoice;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class InvoiceService {
+public interface InvoiceService {
 
-    private final ProductService productService;
-    private final CustomerService customerService;
-    private final InvoiceRepository invoiceRepo;
+    Invoice createInvoice(int customerId,
+                          List<InvoiceRequestDTO.ItemRequestDTO> items,
+                          double discount);
 
-    private int invoiceId = 1;
+    List<Invoice> getAllInvoices();
 
-    public InvoiceService(ProductService productService,
-                          CustomerService customerService,
-                          InvoiceRepository invoiceRepo) {
-        this.productService = productService;
-        this.customerService = customerService;
-        this.invoiceRepo = invoiceRepo;
-    }
+    Invoice getInvoiceById(int id);
 
-    public InvoiceResponseDTO createInvoice(InvoiceRequestDTO request) {
-
-        if (request.getItems() == null || request.getItems().isEmpty()) {
-            throw new RuntimeException("Invoice items cannot be empty");
-        }
-
-        // validate customer exists
-        customerService.getById(request.getCustomerId());
-
-        InvoiceResponseDTO response = new InvoiceResponseDTO();
-        response.setInvoiceId(invoiceId++);
-        response.setCustomerId(request.getCustomerId());
-
-        double total = 0;
-        double taxTotal = 0;
-        double discount = Math.max(request.getDiscount(), 0);
-
-        List<InvoiceResponseDTO.ItemResponseDTO> itemResponses =
-                new ArrayList<>();
-
-        for (InvoiceRequestDTO.ItemRequestDTO item : request.getItems()) {
-
-            // FIXED METHOD NAME
-            Product product = productService.findById(item.getProductId());
-
-            if (product.getStockQuantity() < item.getQuantity()) {
-                throw new InsufficientStockException(
-                        "Insufficient stock for " + product.getProName());
-            }
-
-            //FIXED FIELD NAME
-            double price = product.getProPrice() * item.getQuantity();
-            double tax = price * product.getGstPercentage() / 100;
-
-            product.setStockQuantity(
-                    product.getStockQuantity() - item.getQuantity()
-            );
-
-            InvoiceResponseDTO.ItemResponseDTO ir =
-                    new InvoiceResponseDTO.ItemResponseDTO();
-
-            //FIXED METHOD NAME
-            ir.setProductName(product.getProName());
-            ir.setQuantity(item.getQuantity());
-            ir.setPrice(price);
-            ir.setTax(tax);
-            ir.setTotal(price + tax);
-
-            itemResponses.add(ir);
-
-            total += price;
-            taxTotal += tax;
-        }
-
-        response.setResponseDTOList(itemResponses);
-        response.setTotalAmount(total);
-        response.setTaxAmount(taxTotal);
-        response.setDiscount(discount);
-        response.setFinalAmount(total + taxTotal - discount);
-
-        invoiceRepo.save(response);
-        return response;
-    }
-
-    public List<InvoiceResponseDTO> getAllInvoices() {
-        return invoiceRepo.findAll();
-    }
-
-    public InvoiceResponseDTO getInvoiceById(int id) {
-        return invoiceRepo.findById(id);
-    }
-
-    public List<InvoiceResponseDTO> getByCustomerId(int customerId) {
-        return invoiceRepo.findByCustomerId(customerId);
-    }
+    List<Invoice> getInvoicesByCustomer(int customerId);
 }
